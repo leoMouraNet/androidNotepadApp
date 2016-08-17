@@ -1,5 +1,6 @@
 package com.example.mc.NotesAppSKL;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,6 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    final CharSequence sortOption[] = new CharSequence[] {"Alphabetic A-Z", "Alphabetic Z-A", "Newest Saved", "Oldest Saved"};
+
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -89,12 +94,52 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_newNote) {
             Intent i = new Intent(getApplicationContext(),NewnoteActivity.class);
             startActivity(i);
+            return true;
+        }
+
+        if (id == R.id.action_sort) {
+            //Intent i = new Intent(getApplicationContext(),NewnoteActivity.class);
+            //startActivity(i);
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Sort by...");
+            builder.setItems(sortOption, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // the user clicked on sortOption[which]
+                    //System.out.println("Sort Option: " + sortOption[which]);
+
+                    switch(which) {
+                        case 0:
+                            System.out.println("Alphabetic A-Z");
+                            break;
+                        case 1:
+                            System.out.println("Alphabetic Z-A");
+                            break;
+                        case 2:
+                            System.out.println("Newest Saved");
+                            break;
+                        case 3:
+                            System.out.println("Oldest Saved");
+                            break;
+                        default:
+                            System.out.println("Alphabetic A-Z");
+                    }
+
+                }
+            });
+            builder.show();
+
+
             return true;
         }
 

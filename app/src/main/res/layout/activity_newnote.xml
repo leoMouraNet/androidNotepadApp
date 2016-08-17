@@ -13,9 +13,92 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Add New Note Here!!"
+        android:text="Notes"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="124dp" />
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Tittle"
+        android:ems="10"
+        android:id="@+id/txtNoteTittle"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="24dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Location"
+        android:ems="10"
+        android:id="@+id/txtNoteLocation"
+        android:layout_below="@+id/txtNoteTittle"
+        android:layout_alignStart="@+id/txtNoteTittle" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:lines="3"
+        android:hint="Message"
+        android:ems="10"
+        android:id="@+id/txtNoteMessage"
+        android:layout_below="@+id/txtNoteLocation"
+        android:layout_alignStart="@+id/txtNoteLocation" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:id="@+id/imageView"
+        android:tag="myTagImage in .xml"
+        android:src="@drawable/frame_pic"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/txtNoteMessage"
+        android:layout_alignEnd="@+id/textView" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Picture"
+        android:id="@+id/btnTakePicture"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Picture"
+        android:id="@+id/btnSelectPicture"
+        android:layout_alignTop="@+id/btnTakePicture"
+        android:layout_alignStart="@+id/textView" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voice Note"
+        android:id="@+id/btnVoiceNote"
+        android:layout_above="@+id/btnTakePicture"
+        android:layout_toEndOf="@+id/txtNoteMessage" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/btnSaveNote"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/btnSelectPicture"
+        android:layout_alignEnd="@+id/txtNoteMessage"
+        android:layout_toEndOf="@+id/btnTakePicture" />
 </RelativeLayout>
+

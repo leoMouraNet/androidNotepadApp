@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Notes App SKL.</string>
     <string name="action_newNote">New Note</string>
+    <string name="action_sort">Sort by...</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

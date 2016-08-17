@@ -14,14 +14,6 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link NotesActivity.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link NotesActivity#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class NotesActivity extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +23,8 @@ public class NotesActivity extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View NotesView;
 
     private SearchView searchView;
     private ListView listView;
@@ -88,10 +82,14 @@ public class NotesActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_notes, container, false);
+        NotesView = inflater.inflate(R.layout.activity_notes, container, false);
 
-        listView = (ListView) view.findViewById(R.id.listView);
-        searchView = (SearchView) view.findViewById(R.id.searchView);
+        //get my visual obj here
+        listView = (ListView) NotesView.findViewById(R.id.listView);
+        searchView = (SearchView) NotesView.findViewById(R.id.searchView);
+
+
+
 
         for (String movie: movieList) {
             filtMovieList.add(movie);
@@ -149,7 +147,10 @@ public class NotesActivity extends Fragment {
                 return false;
             }
         });
-
-        return view;
+        //Return myView Inflated
+        return NotesView;
     }
+
+
+
  }
