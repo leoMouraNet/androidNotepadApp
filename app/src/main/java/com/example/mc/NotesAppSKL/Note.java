@@ -1,14 +1,24 @@
 package com.example.mc.NotesAppSKL;
 
 public class Note {
-    private int id;
-    private String title;
-    private String location;
-    private String message;
-    private String voice;
-    private String picture;
+    public int id;
+    public String title;
+    public String location;
+    public String message;
+    public String voice;
+    public String picture;
 
     public Note() {}
+
+    public Note(Integer id, String title, String location, String message, String voice, String picture) {
+        super();
+        this.id = id;
+        this.title = title;
+        this.location = location;
+        this.message = message;
+        this.voice = voice;
+        this.picture = picture;
+    }
 
     public Note(String title, String location, String message, String voice, String picture) {
         super();

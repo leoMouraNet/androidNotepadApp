@@ -12,6 +12,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class NotesActivity extends Fragment {
@@ -19,6 +21,8 @@ public class NotesActivity extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    int position = 0;
+    List<Note> listNotes = new LinkedList<Note>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -28,7 +32,9 @@ public class NotesActivity extends Fragment {
 
     private SearchView searchView;
     private ListView listView;
-    private String[] movieList = {
+
+
+    /*private String[] movieList = {
             "Action Movie-1",
             "Action Movie-2",
             "Action Movie-3",
@@ -39,7 +45,7 @@ public class NotesActivity extends Fragment {
             "Comedy Movie-3",
             "Comedy Movie-4",
             "Comedy Movie-5",
-    };
+    };*/
 
     private ArrayList<String> filtMovieList = new ArrayList<>();
     private boolean searchActive = false;
@@ -72,6 +78,16 @@ public class NotesActivity extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MySQLiteHelper db = new MySQLiteHelper(this.getContext());
+
+        listNotes = db.getAllNotes();
+
+        if (listNotes.isEmpty()) {
+            db.addNote(new Note("Note one","Toronto","My new note","",""));
+            db.addNote(new Note("Note two","Ajax","My second trip","",""));
+            db.addNote(new Note("Note three","Sarnia","My Lambton College","",""));
+        }
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -91,8 +107,8 @@ public class NotesActivity extends Fragment {
 
 
 
-        for (String movie: movieList) {
-            filtMovieList.add(movie);
+        for (Note note: listNotes) {
+            filtMovieList.add(note.title);
         }
 
         ArrayAdapter<String> adapter =
@@ -125,9 +141,9 @@ public class NotesActivity extends Fragment {
                 filtMovieList.clear();
 
                 if (!newText.isEmpty()) {
-                    for (String movie: movieList) {
-                        if (movie.contains(newText)) {
-                            filtMovieList.add(movie);
+                    for (Note note: listNotes) {
+                        if (note.title.contains(newText)) {
+                            filtMovieList.add(note.title);
                         }
                     }
                     searchActive = !filtMovieList.isEmpty();
@@ -136,8 +152,8 @@ public class NotesActivity extends Fragment {
                 }
 
                 if (!searchActive) {
-                    for (String movie: movieList) {
-                        filtMovieList.add(movie);
+                    for (Note note: listNotes) {
+                        filtMovieList.add(note.title);
                     }
                 }
 

@@ -49,7 +49,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
      *********/
 
     // Books table name
-    private static final String TABLE_PRODUCTS = "notes";
+    private static final String TABLE_NOTES = "notes";
 
     // Books Table Columns names
     private static final String KEY_ID = "id";
@@ -73,10 +73,46 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         values.put(KEY_VOICE, note.getVoice());
         values.put(KEY_PICTURE, note.getPicture());
 
-        db.insert(TABLE_PRODUCTS,
+        db.insert(TABLE_NOTES,
                 null,
                 values);
 
+        db.close();
+    }
+
+    // Getting one Note
+    public Note getNote(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NOTES, new String[] { KEY_ID,
+                        KEY_TITLE, KEY_LOCATION, KEY_MESSAGE,KEY_VOICE,KEY_PICTURE }, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        Note note = new Note(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
+        // return note
+        return note;
+    }
+
+    // Updating a note
+    public int updateShop(Note note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, note.getTitle());
+        values.put(KEY_LOCATION, note.getLocation());
+        values.put(KEY_MESSAGE, note.getMessage());
+        values.put(KEY_VOICE, note.getVoice());
+        values.put(KEY_PICTURE, note.getPicture());
+        // updating row
+        return db.update(TABLE_NOTES, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(note.getId())});
+    }
+
+    // Deleting a note
+    public void deleteShop(Note note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTES, KEY_ID + " = ?",
+                new String[] { String.valueOf(note.getId()) });
         db.close();
     }
 
@@ -84,7 +120,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public List<Note> getAllNotes() {
         List<Note> notes = new LinkedList<Note>();
 
-        String query = "SELECT  * FROM " + TABLE_PRODUCTS;
+        String query = "SELECT  * FROM " + TABLE_NOTES;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -107,7 +143,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         Log.d("getAllNotes()", notes.toString());
 
-        // return books
+        // return notes
         return notes;
     }
 
