@@ -106,9 +106,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_sort) {
-            //Intent i = new Intent(getApplicationContext(),NewnoteActivity.class);
-            //startActivity(i);
-
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Sort by...");
@@ -121,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     switch(which) {
                         case 0:
                             System.out.println("Alphabetic A-Z");
+                            //Sort Here
                             break;
                         case 1:
                             System.out.println("Alphabetic Z-A");
@@ -139,7 +137,9 @@ public class MainActivity extends AppCompatActivity {
             });
             builder.show();
 
-
+            //Intent i = new Intent(getApplicationContext(),this.NotesActivity);
+            //startActivity(i);
+            System.out.println("----------------------------");
             return true;
         }
 

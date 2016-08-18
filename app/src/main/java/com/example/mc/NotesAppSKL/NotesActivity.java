@@ -151,6 +151,12 @@ public class NotesActivity extends Fragment {
         return NotesView;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Codigo aqui para programar
+        System.out.println("Notes Activity +++onResume+++");
 
+    }
 
  }
