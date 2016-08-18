@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,8 +19,8 @@ import java.io.IOException;
 public class NewnoteActivity extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
-
     private String selectedImagePath;
+    private static final int VOICE_REQUEST = 1234;
 
     EditText txtNoteTittle,txtNoteLocation,txtNoteMessage;
     Button btnSelectPicture,btnTakePicture,btnVoiceNote,btnSaveNote;
@@ -83,9 +84,16 @@ public class NewnoteActivity extends AppCompatActivity {
         });
 
         btnVoiceNote.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 System.out.println("======= CLICK ON +VOICE NOTE+  BUTTON =====");
+
+                Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Please Speak");
+                startActivityForResult(voiceIntent, VOICE_REQUEST);
+
 
             }
         });
@@ -117,12 +125,17 @@ public class NewnoteActivity extends AppCompatActivity {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+
+
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
                 selectedImagePath = getPath(selectedImageUri);
 
                 try{
+                    System.out.println("==== Save Picture Here! ===");
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
                     imageView.setImageBitmap(bitmap); //Place my Image on ImageView
 
@@ -132,7 +145,17 @@ public class NewnoteActivity extends AppCompatActivity {
 
 
             }
+
+            if (requestCode == VOICE_REQUEST) {
+                // Save the voice here
+                System.out.println("==== Save Voice Here! ===");
+            }
+
         }
+
+
+
+
     }
 
     /**
@@ -157,5 +180,8 @@ public class NewnoteActivity extends AppCompatActivity {
         // this is our fallback here
         return uri.getPath();
     }
+
+
+
 
 }//end NewnoteActivity
