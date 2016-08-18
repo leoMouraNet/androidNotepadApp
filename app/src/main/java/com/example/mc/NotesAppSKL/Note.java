@@ -8,7 +8,9 @@ public class Note {
     public String voice;
     public String picture;
 
-    public Note() {}
+    public Note() {
+        this.id = 0;
+    }
 
     public Note(Integer id, String title, String location, String message, String voice, String picture) {
         super();

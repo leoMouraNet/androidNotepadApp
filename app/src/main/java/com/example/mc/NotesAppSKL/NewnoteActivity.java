@@ -21,6 +21,8 @@ public class NewnoteActivity extends AppCompatActivity {
     private static final int SELECT_PICTURE = 1;
     private String selectedImagePath;
     private static final int VOICE_REQUEST = 1234;
+    public Note note = new Note();
+    MySQLiteHelper db = new MySQLiteHelper(this);
 
     EditText txtNoteTittle,txtNoteLocation,txtNoteMessage;
     Button btnSelectPicture,btnTakePicture,btnVoiceNote,btnSaveNote;
@@ -33,8 +35,12 @@ public class NewnoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newnote);
+        Intent mIntent = getIntent();
+        note.id = mIntent.getIntExtra("intID", 0);
 
-
+        if (note.id != 0) {
+            note = db.getNote(note.id);
+        }
         getVisualElements();
 
 
@@ -49,6 +55,12 @@ public class NewnoteActivity extends AppCompatActivity {
         txtNoteMessage = (EditText) findViewById(R.id.txtNoteMessage);
 
         imageView = (ImageView) findViewById(R.id.imageView);
+
+        if (note.id != 0) {
+            txtNoteLocation.setText(note.location);
+            txtNoteTittle.setText(note.title);
+            txtNoteMessage.setText(note.message);
+        }
 
         btnTakePicture = (Button) findViewById(R.id.btnTakePicture);
         btnSelectPicture = (Button) findViewById(R.id.btnSelectPicture);
@@ -103,19 +115,28 @@ public class NewnoteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.println("======= CLICK ON +SAVE NOTE+  BUTTON =====");
 
+                note.title = txtNoteTittle.getText().toString();
+                note.location = txtNoteLocation.getText().toString();
+                note.message = txtNoteMessage.getText().toString();
+
+                if (note.id!=0) {
+                    db.updateNote(note);
+                } else {
+                    db.addNote(note);
+                }
+
                 localNote = txtNoteTittle.getText().toString();
                 localLocation = txtNoteLocation.getText().toString();
                 localMessage = txtNoteMessage.getText().toString();
 
                 localImage = String.valueOf(imageView.getTag());
 
-
                 System.out.println("--------------------");
                 System.out.println("Note: " + localNote);
                 System.out.println("Location: " + localLocation);
                 System.out.println("Message: " + localMessage);
                 System.out.println("Image: " + localImage);
-
+                finish();
 
             }
         });

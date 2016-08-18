@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_newNote) {
             Intent i = new Intent(getApplicationContext(),NewnoteActivity.class);
+
             startActivity(i);
             return true;
         }
@@ -118,10 +119,11 @@ public class MainActivity extends AppCompatActivity {
                     switch(which) {
                         case 0:
                             System.out.println("Alphabetic A-Z");
-                            //Sort Here
+                            NotesActivity.orderby(0);
                             break;
                         case 1:
                             System.out.println("Alphabetic Z-A");
+                            NotesActivity.orderby(1);
                             break;
                         case 2:
                             System.out.println("Newest Saved");

@@ -95,7 +95,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     // Updating a note
-    public int updateShop(Note note) {
+    public int updateNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, note.getTitle());
@@ -109,7 +109,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     // Deleting a note
-    public void deleteShop(Note note) {
+    public void deleteNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NOTES, KEY_ID + " = ?",
                 new String[] { String.valueOf(note.getId()) });

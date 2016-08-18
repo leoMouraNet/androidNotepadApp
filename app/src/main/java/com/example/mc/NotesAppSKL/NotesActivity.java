@@ -1,5 +1,6 @@
 package com.example.mc.NotesAppSKL;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -75,6 +76,10 @@ public class NotesActivity extends Fragment {
         return fragment;
     }
 
+    public static void orderby(int sortOption) {
+        System.out.println("Calling " + sortOption);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +91,7 @@ public class NotesActivity extends Fragment {
             db.addNote(new Note("Note one","Toronto","My new note","",""));
             db.addNote(new Note("Note two","Ajax","My second trip","",""));
             db.addNote(new Note("Note three","Sarnia","My Lambton College","",""));
+            listNotes = db.getAllNotes();
         }
 
         if (getArguments() != null) {
@@ -104,6 +110,8 @@ public class NotesActivity extends Fragment {
         listView = (ListView) NotesView.findViewById(R.id.listView);
         searchView = (SearchView) NotesView.findViewById(R.id.searchView);
 
+        MySQLiteHelper db = new MySQLiteHelper(this.getContext());
+        listNotes = db.getAllNotes();
 
 
 
@@ -120,12 +128,17 @@ public class NotesActivity extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("List item clicked!");
-                String movieName = (String) parent.getItemAtPosition(position);
-                new AlertDialog.Builder(view.getContext())
-                        .setTitle("Movie Selected")
-                        .setMessage(movieName)
-                        .setCancelable(false)
-                        .setPositiveButton("ok", null).create().show();
+                //String movieName = (String) parent.getItemAtPosition(position);
+                //new AlertDialog.Builder(view.getContext())
+                        //.setTitle("Movie Selected")
+                        //.setMessage(movieName)
+                        //.setCancelable(false)
+                        //.setPositiveButton("ok", null).create().show();
+                Intent i = new Intent(getContext(),NewnoteActivity.class);
+                Note note = listNotes.get(position);
+                i.putExtra("intID", note.id);
+                startActivity(i);
+
             }
         });
 
