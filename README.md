@@ -1,5 +1,4 @@
 # androidNotepadApp
-
 This is an Android Notepad App developed for a college assignment.
 
 # Authors:
